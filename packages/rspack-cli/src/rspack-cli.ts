@@ -195,11 +195,11 @@ export class RspackCLI {
 			if (!fs.existsSync(resolvedConfigPath)) {
 				throw new Error(`config file "${resolvedConfigPath}" not exists`);
 			}
-			loadedConfig = require(resolvedConfigPath);
+			loadedConfig = (await import(resolvedConfigPath)).default;
 		} else {
 			let defaultConfigPath = path.resolve(process.cwd(), defaultConfig);
 			if (fs.existsSync(defaultConfigPath)) {
-				loadedConfig = require(defaultConfigPath);
+				loadedConfig = (await import(defaultConfigPath)).default;
 			} else {
 				let entry: Record<string, string> = {};
 				if (options.entry) {
